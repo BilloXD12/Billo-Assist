@@ -14,10 +14,10 @@ const client = new Client({
 
 // Define an array of custom status messages
 const statusMessages = [
-  'Playing games!',
-  'Watching streams!',
-  'Coding bots!',
-  'Chilling in the server!'
+  'Helping BilloXD',
+  'Watching Members',
+  'Editing Reels!',
+  'dsc/gg/billoxd'
 ];
 
 client.once('ready', () => {
