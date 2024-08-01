@@ -1,5 +1,5 @@
 const express = require('express');
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, Events, VoiceState } = require('discord.js');
 const { joinVoiceChannel, VoiceConnectionStatus } = require('@discordjs/voice');
 require('dotenv').config();
 
@@ -16,9 +16,9 @@ const client = new Client({
 // Define an array of custom status messages
 const statusMessages = [
   'Helping BilloXD',
-  'Watching Members',
-  'Editing Reels!',
-  'dsc/gg/billoxd'
+  'Instagram: ig.billo',
+  'Editing Reels',
+  'dsc.gg/billoxd'
 ];
 
 // Create an Express server
@@ -99,6 +99,21 @@ client.once('ready', () => {
   }, 30000);
 
   reconnectVoiceChannel(); // Attempt to connect to the voice channel when the bot starts
+});
+
+client.on(Events.VoiceStateUpdate, (oldState, newState) => {
+  if (newState.id === client.user.id) {
+    // If the bot's voice state has changed, ensure it's not deafened
+    if (newState.serverMute) {
+      console.log('Bot was muted, unmuting...');
+      newState.setMute(false).catch(console.error);
+    }
+
+    if (newState.serverDeaf) {
+      console.log('Bot was deafened, undeafening...');
+      newState.setDeaf(false).catch(console.error);
+    }
+  }
 });
 
 client.login(process.env.TOKEN);
