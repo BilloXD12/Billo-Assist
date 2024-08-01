@@ -1,3 +1,4 @@
+const express = require('express');
 const { Client, GatewayIntentBits } = require('discord.js');
 const { joinVoiceChannel, VoiceConnectionStatus } = require('@discordjs/voice');
 require('dotenv').config();
@@ -19,6 +20,18 @@ const statusMessages = [
   'Editing Reels!',
   'dsc/gg/billoxd'
 ];
+
+// Create an Express server
+const app = express();
+const port = process.env.PORT || 3000; // Use the port provided by Render or default to 3000
+
+app.get('/', (req, res) => {
+  res.send('Bot is running');
+});
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
